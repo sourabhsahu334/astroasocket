@@ -36,7 +36,12 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
+  socket.on('ice-candidate', (data) => {
+    console.log('ICE candidate received, broadcasting to room:', data.roomId);
+    socket.to(data.roomId).emit('ice-candidate', data.candidate);
+  });
 });
+
 
 const PORT = 4000;
 server.listen(PORT, () => {
