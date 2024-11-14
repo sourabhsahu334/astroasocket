@@ -15,6 +15,24 @@ io.on('connection', socket => {
     console.log(`Socket ${socket.id} joined room ${roomId}`);
   });
 
+  socket.on('sendmesssage', roomId,userid,message => {
+    socket.join(userid);
+    //udate the data on the userid in database
+    socket.emit('recievedmessage',userid,message)
+  });
+
+  socket.on('typing', (roomId, userId) => {
+    // Broadcast to others in the room that the specific user is typing
+    socket.to(roomId).emit('typing', { userId, isTyping: true });
+  });
+  
+  // Listen for stop-typing event and broadcast it to the room
+  socket.on('stop-typing', (roomId, userId) => {
+    // Broadcast to others in the room that the specific user has stopped typing
+    socket.to(roomId).emit('typing', { userId, isTyping: false });
+  });
+
+
   // Listen for leaving a room
   socket.on('leave', roomId => {
     socket.leave(roomId);
