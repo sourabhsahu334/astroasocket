@@ -15,11 +15,11 @@ io.on('connection', socket => {
     console.log(`Socket ${socket.id} joined room ${roomId}`);
   });
 
-  socket.on('sendmesssage', roomId,userid,message => {
-    socket.join(userid);
-    //udate the data on the userid in database
-    socket.emit('recievedmessage',userid,message)
-  });
+  // socket.on('sendmesssage', roomId,userid,message => {
+  //   socket.join(userid);
+  //   //udate the data on the userid in database
+  //   socket.emit('recievedmessage',userid,message)
+  // });
 
   socket.on('typing', (roomId) => {
     console.log('typing ',roomId)
