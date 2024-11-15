@@ -22,10 +22,13 @@ io.on('connection', socket => {
   });
 
   socket.on('typing', (roomId) => {
+    console.log('typing ',roomId)
     socket.to(roomId).emit('typing', { roomId, isTyping: true });
   });
   
   socket.on('stop-typing', (roomId) => {
+    console.log('stoptyping ',roomId)
+
     socket.to(roomId).emit('typing', { roomId, isTyping: false });
   });
 
