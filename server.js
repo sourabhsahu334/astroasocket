@@ -21,15 +21,12 @@ io.on('connection', socket => {
     socket.emit('recievedmessage',userid,message)
   });
 
-  socket.on('typing', (roomId, userId) => {
-    // Broadcast to others in the room that the specific user is typing
-    socket.to(roomId).emit('typing', { userId, isTyping: true });
+  socket.on('typing', (roomId) => {
+    socket.to(roomId).emit('typing', { roomId, isTyping: true });
   });
   
-  // Listen for stop-typing event and broadcast it to the room
-  socket.on('stop-typing', (roomId, userId) => {
-    // Broadcast to others in the room that the specific user has stopped typing
-    socket.to(roomId).emit('typing', { userId, isTyping: false });
+  socket.on('stop-typing', (roomId) => {
+    socket.to(roomId).emit('typing', { roomId, isTyping: false });
   });
 
 
